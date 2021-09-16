@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RestController
+@RestController //ResponseBody + Controller
 public class PostsApiController {
 
     private final PostsService postsService;

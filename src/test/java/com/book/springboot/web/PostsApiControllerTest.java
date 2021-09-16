@@ -3,6 +3,7 @@ package com.book.springboot.web;
 import com.book.springboot.domain.posts.Posts;
 import com.book.springboot.domain.posts.PostsRepository;
 import com.book.springboot.web.dto.PostsSaveRequestDto;
+import com.book.springboot.web.dto.PostsUpdateRequestDto;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -62,16 +65,42 @@ public class PostsApiControllerTest {
 
     @Test
     public void Posts_수정() throws Exception{
+        //given
+        //entity에 들어있는 로직으로 게시판 글 업로드 하고 업로드된 글 return
         Posts savedPosts = postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
                 .author("author")
                 .build());
 
+        // 변경할 값 정하기
         Long updateId = savedPosts.getId();
         String expectedTitle = "title2";
         String expectedContent = "content2";
 
+        // 변경할 값을 dto에 저장해둔다.(더티체킹)
+        PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
+                .title(expectedTitle)
+                .content(expectedContent)
+                .build();
+
+        // put으로 해당링크에 매핑해줌
+        String url = "http://localhost:"+port+"/api/v1/posts/"+updateId;
+        // 서버에 requestDto를 담아 보내줌 (body에 requestDto값 전달) , header 없음
+        HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+
+        //when
+        // 서버에서 클라이언트로 response가 왔음(requestEntity의 값을 한번 더 묶어준다고 생각하면 됨.)
+        // body에 숫자값이 들어옴, 변경된 내용이 반영되어 돌아오는 듯, header에는 말그대로 헤더정보 들어옴
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT,requestEntity,Long.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
+        assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
 
     }
     

@@ -1,5 +1,6 @@
 package com.book.springboot.domain.posts;
 
+import com.book.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor // 기본 생성자가 생김  null check 안됨
 @Entity
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //회원이 생성될 때 임의의 번호를 통해 다른 테이블과 연결시켜줘야한다, 가령 id, 주민번호로 매핑하는 것은 무결성이 훼손된다.
