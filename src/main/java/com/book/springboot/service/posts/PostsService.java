@@ -2,12 +2,16 @@ package com.book.springboot.service.posts;
 
 import com.book.springboot.domain.posts.Posts;
 import com.book.springboot.domain.posts.PostsRepository;
+import com.book.springboot.web.dto.PostsListResponseDto;
 import com.book.springboot.web.dto.PostsResponseDto;
 import com.book.springboot.web.dto.PostsSaveRequestDto;
 import com.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,5 +37,20 @@ public class PostsService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id =  " + id) );
 
         return new PostsResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc(){
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());  //List<Posts> 를 stream으로 map을통해 Dto로 변환해주고, List로 반환해준다.
+    }
+
+    @Transactional
+    public void delete(Long id){
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
+        postsRepository.delete(posts);
+
     }
 }
