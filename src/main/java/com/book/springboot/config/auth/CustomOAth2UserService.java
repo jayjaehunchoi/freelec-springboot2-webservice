@@ -28,7 +28,6 @@ public class CustomOAth2UserService implements OAuth2UserService<OAuth2UserReque
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
         // 현재 로그인 진행중인 서비스 구분 (네이버인지 구글인지) 하나만 하면 쓸모 x
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
