@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+//체크
 @Getter
 public class PostsListResponseDto {
 
