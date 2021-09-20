@@ -2,14 +2,14 @@ package com.book.springboot;
 
 import com.book.springboot.config.auth.SecurityConfig;
 import com.book.springboot.web.HelloController;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class) // 스프링 부트와 junit사이의 연결자
+@ExtendWith(SpringExtension.class) // 스프링 부트와 junit사이의 연결자
 @WebMvcTest(controllers = HelloController.class,
                             excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
                             classes = SecurityConfig.class)}) //Controller만 테스트 해줄 때 이 annotation을 사용

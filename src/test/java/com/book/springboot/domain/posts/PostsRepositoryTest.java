@@ -2,27 +2,27 @@ package com.book.springboot.domain.posts;
 
 import org.apache.tomcat.jni.Local;
 import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest // 별다른 세팅 없이도 h2 데이터 베이스 돌아감
 public class PostsRepositoryTest {
 
     @Autowired
     PostsRepository postsRepository;
 
-    @After // 테스트가 종료되면 , 수행된다 더불어 AfterEach라는 애노테이션도 있음
+    @AfterEach // 테스트가 종료되면 , 수행된다 더불어 AfterEach라는 애노테이션도 있음
     public void cleanup(){
         postsRepository.deleteAll();
     }
