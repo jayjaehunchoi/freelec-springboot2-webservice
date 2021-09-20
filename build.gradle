@@ -24,18 +24,29 @@ repositories { // 각종 의존성 라이브러리들을 어떤 원격저장소�
      mavenCentral()
 }
 
+test { // (2)
+    useJUnitPlatform()
+}
+
 // 프로젝트 개발에 필요한 의존성을 선언하는 곳, 특정 버전을 명시하지 않아야 위의 버전에 맞게 자동으로 주입됨.
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-mustache')
+
     implementation('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+    testImplementation('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+
     implementation('org.springframework.boot:spring-boot-starter-data-jpa') //스프링 부트용 스프링 데이터 jpa 추상화 라이브러리
     implementation('com.h2database:h2') // 인메모리 관계형  db, 애플리케이션 실행마다 초기화된다는 점을 이용하여 테스트 용도로 많이 사용됨
-    implementation('org.springframework.boot:spring-boot-starter-mustache')
+    implementation('org.mariadb.jdbc:mariadb-java-client')
+
     implementation('org.springframework.boot:spring-boot-starter-oauth2-client') // 소셜 로그인 기능 구현시 필요한 의존성
     implementation('org.springframework.session:spring-session-jdbc') //세션 저장소를 jdbc로 선택할 수 있게끔 입력해줌
-    implementation('org.mariadb.jdbc:mariadb-java-client')
-    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
-    annotationProcessor('org.projectlombok:lombok')
+
+    testImplementation ('org.junit.jupiter:junit-jupiter-api:5.3.1')
+    testRuntimeOnly ('org.junit.jupiter:junit-jupiter-engine:5.3.1')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.security:spring-security-test')
 }
