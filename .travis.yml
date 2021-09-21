@@ -13,6 +13,9 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.gradle'
 
+before_install:
+  - chmod +x gradlew
+
 # gradlew 클린 빌드 수행
 script: "./gradlew clean build"
 
