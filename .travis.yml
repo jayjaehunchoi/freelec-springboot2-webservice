@@ -19,6 +19,22 @@ before_install:
 # gradlew 클린 빌드 수행
 script: "./gradlew clean build"
 
+before_deploy:
+  - zip -r freelec-springboot2-webservice
+  - mkdir -p deploy
+  - mv freelec-springboot2-webservice.zip deploy/freelec-springboot2-webservice.zip
+
+deploy:
+  - provider: s3
+  access_key_id: AKIAZ4ZTDFKQHQZ34G7P
+  secret_access_key: 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
+  bucket: kehighway
+  region: ap-northeast-2
+  skip_cleanup: true
+  acl: private
+  local_dir: deploy
+  wait-until-deploy: true
+
 # 자동알람
 notifications:
   email:
