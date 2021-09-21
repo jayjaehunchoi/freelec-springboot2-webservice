@@ -26,14 +26,14 @@ before_deploy:
 
 deploy:
   - provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
-  bucket: kehighway
-  region: ap-northeast-2
-  skip_cleanup: true
-  acl: private
-  local_dir: deploy
-  wait-until-deploy: true
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: kehighway
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deploy: true
 
 # 자동알람
 notifications:
